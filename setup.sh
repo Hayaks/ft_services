@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/08/13 17:23:59 by user42           ###   ########.fr        #
+#    Updated: 2020/09/10 15:16:36 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ mag=$'\e[1;35m'
 cyn=$'\e[1;36m'
 end=$'\e[0m'
 
+minikube delete
 rm -rf ~/.minikube
 mkdir -p ~/goinfre/.minikube
 ln -s ~/goinfre/.minikube ~/.minikube
@@ -44,3 +45,6 @@ export MINIKUBE_IP=$(minikube ip)
 
 printf "Building and deploying ftps:\t\t"
 docker build -t ftps_alpine ./srcs/ftps > /dev/null 2>>errlog.txt && { printf "[${grn}OK${end}]\n"; kubectl apply -f ./srcs/ftps.yaml >> log.log 2>> errlog.txt; } || printf "[${red}NO${end}]\n"
+
+echo "Server IP : $MINIKUBE_IP"
+minikube dashboard
