@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/09/10 15:16:36 by user42           ###   ########.fr        #
+#    Updated: 2020/09/10 15:44:20 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,12 @@ mag=$'\e[1;35m'
 cyn=$'\e[1;36m'
 end=$'\e[0m'
 
+#for linux (stop automatic nginx)
+FILE=/run/nginx.pid
+if [ -e "$FILE" ]; then 
+	sudo nginx -s stop
+fi
+
 minikube delete
 rm -rf ~/.minikube
 mkdir -p ~/goinfre/.minikube
@@ -28,6 +34,13 @@ ln -s ~/goinfre/.minikube ~/.minikube
 
 echo "Minikube starting..."
 minikube start --cpus=2 --memory=3000 --disk-size=8000mb --vm-driver=docker
+
+#if start didn't work then restart minikube
+minikube status
+if [ "$?" -ne 0 ]; then
+	minikube start --cpus=2 --memory=3000 --disk-size=8000mb --vm-driver=docker
+fi
+
 minikube addons enable metrics-server
 minikube addons enable dashboard
 
