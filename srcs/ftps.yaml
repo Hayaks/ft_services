@@ -2,58 +2,56 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ftps-svc
-  annotations:
-    metallb.universe.tf/address-pool: ftps-ip
   labels:
-    app: ftps
+    app: ftps-app
 spec:
-  type: LoadBalancer
-  selector:
-    app: ftps
+  loadBalancerIP: 172.17.0.9
   ports:
-  - name: ftp-data
-    port: 20
-  - name: ftp-connection
-    port: 21
-  - name: pftp-data-0
-    port: 30000
-
+  - port: 21
+    protocol: TCP
+    name: ftps
+  - port: 21000
+    protocol: TCP
+    name: ftps-data
+  selector:
+    app: ftps-app
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ftps
+  name: ftps-deployment
   labels:
-    app: ftps
+    app: ftps-app
 spec:
   selector:
     matchLabels:
-      app: ftps
+      app: ftps-app
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: ftps
+        app: ftps-app
     spec:
       containers:
       - name: ftps
-        image: ftps_alpine
+        image: services/ftps
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - /root/script/liveness.sh
+          initialDelaySeconds: 5
+          periodSeconds: 3
         imagePullPolicy: Never
-        ports:
-        - containerPort: 20
-        - containerPort: 21
-        - containerPort: 30000
         env:
-        - name: USER
-          value: peer
-        - name: PASS
-          value: pass
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: HOSTNAME 
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
+        - name: FTP_USER
+          value: admin
+        - name: FTP_PASSWORD
+          value: admin
+        ports:
+        - containerPort: 21
+          hostPort: 21
+        - containerPort: 21000
+          hostPort: 21000
