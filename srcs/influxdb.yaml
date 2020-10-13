@@ -31,8 +31,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: influxdb-deployment
-  labels:
-    app: influxdb-app
 spec:
   replicas: 1
   selector:
@@ -47,7 +45,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: services/influxdb
+        image: influxdb-image
         ports:
         - containerPort: 8086
         imagePullPolicy: Never

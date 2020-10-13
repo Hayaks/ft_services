@@ -9,6 +9,6 @@ COPY srcs/files /root/files
 
 RUN /root/script/config.sh
 
-EXPOSE 21 21000
+EXPOSE 20 21 21000
 
 CMD /root/script/setup.sh

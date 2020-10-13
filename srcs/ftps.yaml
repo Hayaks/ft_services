@@ -7,12 +7,15 @@ metadata:
 spec:
   loadBalancerIP: 172.17.0.9
   ports:
+  - port: 20
+    protocol: TCP
+    name: ftp-data
   - port: 21
     protocol: TCP
     name: ftps
   - port: 21000
     protocol: TCP
-    name: ftps-data
+    name: ftp-transfer
   selector:
     app: ftps-app
   type: LoadBalancer
@@ -21,14 +24,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ftps-deployment
-  labels:
-    app: ftps-app
 spec:
   selector:
     matchLabels:
       app: ftps-app
   strategy:
     type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
@@ -36,7 +38,7 @@ spec:
     spec:
       containers:
       - name: ftps
-        image: services/ftps
+        image: ftps-image
         livenessProbe:
           exec:
             command:
@@ -51,7 +53,6 @@ spec:
         - name: FTP_PASSWORD
           value: admin
         ports:
+        - containerPort: 20
         - containerPort: 21
-          hostPort: 21
         - containerPort: 21000
-          hostPort: 21000

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    setup.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/10/12 11:09:36 by jsaguez          ###   ########.fr        #
+#    Updated: 2020/10/13 20:38:46 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ end=$'\e[0m'
 ft_build()
 {
 	printf "[${yel}Creation de l'image $1 en cours...${end}]\n"
-	if docker build -t services/$1 srcs/$1/ &> /dev/null 2>>errlog.txt
+	if docker build -t $1-image srcs/$1/ &> /dev/null 2>>errlog.txt
 	then
 			printf "[${grn}Creation de l'image $1 reussi${end}]\n"
         	sleep 1
@@ -35,7 +35,8 @@ ft_build()
         	sleep 1
 	else
         	printf "[${red}Application du yaml $1 impossible...${end}]\n"
-        	
+			exit 1
+    fi 	
 }
 
 #for linux (stop automatic nginx)
@@ -44,6 +45,7 @@ if [ -e "$FILE" ]; then
 	sudo nginx -s stop
 fi
 
+sudo usermod -aG docker $(whoami)
 minikube delete
 rm -rf ~/.minikube
 mkdir -p ~/goinfre/.minikube
@@ -70,14 +72,16 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manife
 # On first install only
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
+eval $(minikube docker-env)
+
 # CONFIGURATION
 kubectl apply -f srcs/metallb.yaml
 
-eval $(minikube docker-env)
 export MINIKUBE_IP=$(minikube ip)
 
-printf "Building and deploying ftps:\t\t"
-docker build -t ftps_alpine ./srcs/ftps > /dev/null 2>>errlog.txt && { printf "[${grn}OK${end}]\n"; kubectl apply -f ./srcs/ftps.yaml >> log.log 2>> errlog.txt; } || printf "[${red}NO${end}]\n"
+ft_build influxdb
+ft_build grafana
+ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
 minikube dashboard
