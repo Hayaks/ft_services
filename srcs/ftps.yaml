@@ -36,6 +36,7 @@ spec:
       labels:
         app: ftps-app
     spec:
+      restartPolicy: Always
       containers:
       - name: ftps
         image: ftps-image
