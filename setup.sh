@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/10/17 18:02:18 by user42           ###   ########.fr        #
+#    Updated: 2020/10/17 18:33:37 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,9 @@ kubectl apply -f srcs/metallb.yaml
 
 export MINIKUBE_IP=$(minikube ip)
 
+ft_build nginx
 ft_build influxdb
-#ft_build grafana
+ft_build grafana
 ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
