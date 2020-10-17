@@ -1,6 +1,6 @@
 FROM    alpine:latest
 
-RUN     apk add --no-cache bash wget influxdb
+RUN     apk add --no-cache --upgrade bash wget influxdb
 
 COPY    setup.sh .
 
