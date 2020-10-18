@@ -1,9 +1,13 @@
-FROM    alpine:latest
+FROM alpine:latest
 
-RUN     apk add --no-cache --upgrade bash wget influxdb
+RUN apk add --no-cache bash wget influxdb openrc \
+telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
-COPY    setup.sh .
+COPY srcs/script /root/script
+COPY srcs/config /root/config
 
-EXPOSE	8086
+RUN /root/script/config.sh
 
-CMD	    ./setup.sh
+EXPOSE 8086
+
+CMD /root/script/setup.sh

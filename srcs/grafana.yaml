@@ -8,9 +8,9 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 172.17.0.8
   ports:
-  - name: grafana
-    port: 3000
+  - port: 3000
     protocol: TCP
+    name: http
   selector:
     app: grafana-app
 ---
@@ -18,6 +18,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana-deployment
+  labels:
+    app: grafana-app
 spec:
   replicas: 1
   selector:
@@ -30,10 +32,16 @@ spec:
       labels:
         app: grafana-app
     spec:
-      restartPolicy: Always
       containers:
       - name: grafana
         image: grafana-image
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - /root/script/liveness.sh
+          initialDelaySeconds: 5
+          periodSeconds: 3
         ports:
         - containerPort: 3000
         imagePullPolicy: Never

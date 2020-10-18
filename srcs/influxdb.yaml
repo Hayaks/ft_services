@@ -5,13 +5,11 @@ metadata:
   labels:
     app: influxdb-app
 spec:
-  type: ClusterIP
   ports:
-  - name: influxdb
-    port: 8086
-    protocol: TCP
+  - port: 8086
   selector:
     app: influxdb-app
+  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,12 +22,14 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 8Gi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: influxdb-deployment
+  labels:
+    app: influxdb-app
 spec:
   replicas: 1
   selector:
@@ -42,10 +42,16 @@ spec:
       labels:
         app: influxdb-app
     spec:
-      restartPolicy: Always
       containers:
       - name: influxdb
         image: influxdb-image
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - /root/script/liveness.sh
+          initialDelaySeconds: 5
+          periodSeconds: 3
         ports:
         - containerPort: 8086
         imagePullPolicy: Never
