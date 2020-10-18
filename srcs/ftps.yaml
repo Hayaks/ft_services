@@ -24,6 +24,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ftps-deployment
+  labels:
+    app: ftps-app
 spec:
   selector:
     matchLabels:
