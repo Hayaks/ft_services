@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    setup.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#    By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/10/18 21:29:58 by user42           ###   ########.fr        #
+#    Updated: 2020/10/19 14:27:30 by jsaguez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,10 +77,17 @@ minikube addons enable metallb
 # On first install only
 #kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
-# CONFIGURATION
+# CONFIGURATION METALLB
+export MINIKUBE_IP=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")
+
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/metallb.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/nginx.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/grafana.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/ftps.yaml
+
 kubectl apply -f srcs/metallb.yaml
 
-export MINIKUBE_IP=$(minikube ip)
+# BUILD
 
 ft_build nginx
 ft_build influxdb
@@ -88,4 +95,10 @@ ft_build grafana
 ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
+
+rm srcs/metallb.yaml && mv srcs/metallb.yaml.bak srcs/metallb.yaml
+rm srcs/nginx.yaml && mv srcs/nginx.yaml.bak srcs/nginx.yaml
+rm srcs/grafana.yaml && mv srcs/grafana.yaml.bak srcs/grafana.yaml
+rm srcs/ftps.yaml && mv srcs/ftps.yaml.bak srcs/ftps.yaml
+
 minikube dashboard

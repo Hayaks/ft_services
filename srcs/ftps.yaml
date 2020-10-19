@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ftps-app
 spec:
-  loadBalancerIP: 172.17.0.9
+  loadBalancerIP: IPex9
   ports:
   - port: 20
     protocol: TCP
