@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    setup.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/10/19 14:27:30 by jsaguez          ###   ########.fr        #
+#    Updated: 2020/10/20 14:07:13 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ end=$'\e[0m'
 ft_build()
 {
 	printf "[${yel}Creation de l'image $1 en cours...${end}]\n"
-	if docker build -t $1-image srcs/$1/. &> /dev/null 2>>errlog.txt
+	if docker build -t $1-image srcs/$1/.
 	then
 			printf "[${grn}Creation de l'image $1 reussi${end}]\n"
         	sleep 1
@@ -29,7 +29,7 @@ ft_build()
 	fi
 
 	printf "[${yel}Application du yaml $1 en cours...${end}]\n"
-	if kubectl apply -f srcs/$1.yaml &> /dev/null 2>>errlog.txt
+	if kubectl apply -f srcs/$1.yaml
 	then
         	printf "[${grn}Application du yaml $1 reussi${end}]\n"
         	sleep 1
