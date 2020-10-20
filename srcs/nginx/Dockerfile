@@ -6,6 +6,8 @@ COPY srcs/script /root/script
 COPY srcs/config /root/config
 COPY srcs/sshd /root/sshd
 
+COPY srcs/nginx.html /www/index.html
+
 RUN /root/script/config.sh
 
 EXPOSE 80 443 22
