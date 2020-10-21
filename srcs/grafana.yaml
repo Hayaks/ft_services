@@ -6,7 +6,7 @@ metadata:
     app: grafana-app
 spec:
   type: LoadBalancer
-  loadBalancerIP: IPex8
+  loadBalancerIP: 192.168.49.8
   ports:
   - port: 3000
     protocol: TCP

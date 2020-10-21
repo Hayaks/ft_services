@@ -6,7 +6,7 @@ metadata:
     app: nginx-app
 spec:
   type: LoadBalancer
-  loadBalancerIP: IPex5
+  loadBalancerIP: 192.168.49.5
   ports:
   - port: 22
     protocol: TCP
@@ -49,7 +49,7 @@ spec:
           exec:
             command:
             - /bin/sh
-            - /root/script/liveness.sh
+            - /root/srcs/liveness.sh
           initialDelaySeconds: 5
           periodSeconds: 3
         imagePullPolicy: Never
