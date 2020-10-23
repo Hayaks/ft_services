@@ -4,8 +4,11 @@ metadata:
   name: ftps-svc
   labels:
     app: ftps-app
+  annotations:
+    metallb.universe.tf/allow-shared-ip: share-ip 
 spec:
-  loadBalancerIP: 192.168.49.9
+  type: LoadBalancer
+  loadBalancerIP: 192.168.49.10
   ports:
   - port: 20
     protocol: TCP
@@ -18,7 +21,6 @@ spec:
     name: ftp-transfer
   selector:
     app: ftps-app
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment

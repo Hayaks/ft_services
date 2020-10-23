@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --no-cache bash wget php7 openrc --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main libc6-compat \
+RUN apk update && apk add --no-cache --upgrade bash wget php7 openrc --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main libc6-compat \
 telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 RUN wget https://dl.grafana.com/oss/release/grafana-6.6.0.linux-amd64.tar.gz \

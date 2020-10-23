@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-svc
+  labels:
+    app: wordpress-app
+  annotations:
+    metallb.universe.tf/allow-shared-ip: share-ip 
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.49.10
+  ports:
+  - port: 5050
+    protocol: TCP
+    name: http
+  selector:
+    app: wordpress-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+  labels:
+    app: wordpress-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress-app
+    spec:
+      containers:
+      - name: wordpress
+        image: wordpress-image
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - /root/srcs/liveness.sh
+          initialDelaySeconds: 5
+          periodSeconds: 3
+        ports:
+        - containerPort: 5050
+        imagePullPolicy: Never
+        env:
+          - name: DB_NAME
+            value: wordpress
+          - name: DB_USER
+            value: admin
+          - name: DB_PASSWORD
+            value: admin
+          - name: DB_HOST
+            value: mysql-svc

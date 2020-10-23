@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --no-cache bash wget influxdb openrc \
+RUN apk update && apk add --no-cache --upgrade bash wget influxdb openrc \
 telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 COPY srcs/ /root/srcs

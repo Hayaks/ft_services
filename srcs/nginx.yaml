@@ -4,9 +4,11 @@ metadata:
   name: nginx-svc
   labels:
     app: nginx-app
+  annotations:
+    metallb.universe.tf/allow-shared-ip: share-ip 
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.49.5
+  loadBalancerIP: 192.168.49.10
   ports:
   - port: 22
     protocol: TCP

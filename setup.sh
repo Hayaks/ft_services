@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    setup.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/10/21 13:33:25 by jsaguez          ###   ########.fr        #
+#    Updated: 2020/10/23 22:15:11 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,17 +71,12 @@ minikube addons enable metrics-server
 minikube addons enable dashboard
 minikube addons enable metallb
 
-#metallb
-#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
-#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
-# On first install only
-#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-
 # CONFIGURATION METALLB
-export MINIKUBE_IP=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")
+export MINIKUBE_IP=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")10
 
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/metallb.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/nginx.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/wordpress.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/grafana.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/ftps.yaml
 
@@ -89,15 +84,18 @@ kubectl apply -f srcs/metallb.yaml
 
 # BUILD
 
-ft_build nginx
-ft_build influxdb
-ft_build grafana
-ft_build ftps
+#ft_build nginx
+ft_build mysql
+ft_build wordpress
+#ft_build influxdb
+#ft_build grafana
+#ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
 
 rm srcs/metallb.yaml && mv srcs/metallb.yaml.bak srcs/metallb.yaml
 rm srcs/nginx.yaml && mv srcs/nginx.yaml.bak srcs/nginx.yaml
+rm srcs/wordpress.yaml && mv srcs/wordpress.yaml.bak srcs/wordpress.yaml
 rm srcs/grafana.yaml && mv srcs/grafana.yaml.bak srcs/grafana.yaml
 rm srcs/ftps.yaml && mv srcs/ftps.yaml.bak srcs/ftps.yaml
 
