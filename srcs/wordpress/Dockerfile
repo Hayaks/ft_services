@@ -10,4 +10,4 @@ RUN /root/srcs/config.sh
 
 EXPOSE 5050
 
-CMD /root/script/setup.sh
+CMD /root/srcs/setup.sh

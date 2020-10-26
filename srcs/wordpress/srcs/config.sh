@@ -1,13 +1,13 @@
 mv ./root/srcs/telegraf.conf ./etc/telegraf.conf
 
-mkdir -p /var/www/wordpress
+mkdir -p /www
 
 wget https://wordpress.org/latest.tar.gz \
 && tar -xvf latest.tar.gz \
-&& rm -rf latest.tar.gz \
-&& chmod 755 -R /wordpress
+&& mv wordpress/* /www \
+&& rm -rf /var/cache/apk/*
 
-mv ./root/srcs/wp-config.php /wordpress/wp-config.php
+mv ./root/srcs/wp-config.php ./www/
 
 openrc
 touch /run/openrc/softlevel
