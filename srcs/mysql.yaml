@@ -5,11 +5,11 @@ metadata:
   labels:
     app: mysql-app
 spec:
-  clusterIP: None
   ports:
   - port: 3306
   selector:
     app: mysql-app
+  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
