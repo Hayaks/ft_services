@@ -9,4 +9,4 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - IPex-IPex
+      - 192.168.49.10-192.168.49.10

@@ -1,12 +1,10 @@
-FROM alpine:latest
+FROM alpine
 
-RUN apk add --no-cache --upgrade bash mariadb mariadb-client mysql mysql-client openrc \
-telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
+RUN	apk add mysql mysql-client
 
-COPY srcs/ /root/srcs
+COPY startup.sh /tmp/startup.sh
+RUN chmod +x /tmp/startup.sh
+COPY my.cnf /etc/
+VOLUME /var/lib/mysql
 
-RUN /root/srcs/config.sh
-
-EXPOSE 3306
-
-CMD /root/srcs/setup.sh
+ENTRYPOINT ["/bin/sh", "/tmp/startup.sh"]
