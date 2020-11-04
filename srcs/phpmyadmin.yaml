@@ -1,42 +1,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-svc
+  name: phpmyadmin-svc
   labels:
-    app: wordpress-app
+    app: phpmyadmin-app
   annotations:
-    metallb.universe.tf/allow-shared-ip: share-ip 
+    metallb.universe.tf/allow-shared-ip: share-ip
 spec:
   type: LoadBalancer
   loadBalancerIP: IPex
   ports:
-  - port: 5050
+  - port: 5000
     protocol: TCP
     name: http
   selector:
-    app: wordpress-app
+    app: phpmyadmin-app
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-deployment
+  name: phpmyadmin-deployment
   labels:
-    app: wordpress-app
+    app: phpmyadmin-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress-app
+      app: phpmyadmin-app
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: wordpress-app
+        app: phpmyadmin-app
     spec:
       containers:
-      - name: wordpress
-        image: wordpress-image
+      - name: phpmyadmin
+        image: phpmyadmin-image
         livenessProbe:
           exec:
             command:
@@ -45,11 +45,11 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 3
         ports:
-        - containerPort: 5050
+        - containerPort: 5000
         imagePullPolicy: Never
         env:
           - name: DB_NAME
-            value: wordpress
+            value: phpmyadmin
           - name: DB_USER
             value: admin
           - name: DB_PASSWORD
