@@ -48,15 +48,10 @@ spec:
           exec:
             command:
             - /bin/sh
-            - /root/script/liveness.sh
+            - /root/srcs/liveness.sh
           initialDelaySeconds: 5
           periodSeconds: 3
         imagePullPolicy: Never
-        env:
-        - name: FTP_USER
-          value: admin
-        - name: FTP_PASSWORD
-          value: admin
         ports:
         - containerPort: 20
         - containerPort: 21

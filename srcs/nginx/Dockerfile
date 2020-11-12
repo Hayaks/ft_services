@@ -18,7 +18,7 @@ COPY srcs/nginx.html /www/index.html
 RUN ssh-keygen -A
 RUN adduser -D "userSSH"
 RUN echo "userSSH:passwordSSH" | chpasswd
-RUN echo "Welcome to the SSH of ft_services. Have fun!" > /etc/motd
+RUN echo "Welcome to the SSH!" > /etc/motd
 
 RUN /root/srcs/config.sh
 

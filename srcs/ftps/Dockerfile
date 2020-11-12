@@ -3,12 +3,10 @@ FROM alpine:latest
 RUN apk update && apk add --no-cache --upgrade bash openrc \
 telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
-COPY srcs/script /root/script
-COPY srcs/config /root/config
-COPY srcs/files /root/files
+COPY srcs/ /root/srcs
 
-RUN /root/script/config.sh
+RUN /root/srcs/config.sh
 
 EXPOSE 20 21 21000
 
-CMD /root/script/setup.sh
+CMD /root/srcs/setup.sh

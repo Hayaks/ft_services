@@ -6,7 +6,6 @@ rc-update add telegraf
 
 cd /grafana
 mkdir data
-
 mv /root/srcs/grafana.db /grafana/data/
 
 chmod +x /root/srcs/setup.sh
