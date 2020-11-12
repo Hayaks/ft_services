@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/11/09 10:21:58 by user42           ###   ########.fr        #
+#    Updated: 2020/11/12 13:32:32 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,13 +85,13 @@ kubectl apply -f srcs/metallb.yaml
 
 # BUILD
 
-#ft_build nginx
+ft_build nginx
 ft_build mysql
 ft_build wordpress
 ft_build phpmyadmin
-#ft_build influxdb
-#ft_build grafana
-#ft_build ftps
+ft_build influxdb
+ft_build grafana
+ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
 
