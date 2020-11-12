@@ -1,4 +1,4 @@
-apk add wget openssl /root/srcs/pure-ftpd.apk
+apk add /root/srcs/pure-ftpd.apk
 
 mv /root/srcs/telegraf.conf /etc/telegraf.conf
 

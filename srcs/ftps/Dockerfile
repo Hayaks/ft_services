@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk update && apk add --no-cache --upgrade bash openrc \
+RUN apk update && apk add --no-cache --upgrade bash openrc openssl wget\
 telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 COPY srcs/ /root/srcs
