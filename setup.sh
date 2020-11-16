@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/11/13 00:21:22 by user42           ###   ########.fr        #
+#    Updated: 2020/11/16 16:57:02 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,18 +80,19 @@ sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/wordpress.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/phpmyadmin.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/grafana.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/ftps.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/ftps/srcs/setup.sh
 
 kubectl apply -f srcs/metallb.yaml
 
 # BUILD
 
-ft_build nginx
+#ft_build nginx
 ft_build mysql
 ft_build wordpress
 ft_build phpmyadmin
-ft_build influxdb
-ft_build grafana
-ft_build ftps
+#ft_build influxdb
+#ft_build grafana
+#ft_build ftps
 
 echo "Server IP : $MINIKUBE_IP"
 
@@ -101,5 +102,6 @@ rm srcs/wordpress.yaml && mv srcs/wordpress.yaml.bak srcs/wordpress.yaml
 rm srcs/phpmyadmin.yaml && mv srcs/phpmyadmin.yaml.bak srcs/phpmyadmin.yaml
 rm srcs/grafana.yaml && mv srcs/grafana.yaml.bak srcs/grafana.yaml
 rm srcs/ftps.yaml && mv srcs/ftps.yaml.bak srcs/ftps.yaml
+rm srcs/ftps/srcs/setup.sh && mv srcs/ftps/srcs/setup.sh.bak srcs/ftps/srcs/setup.sh
 
 minikube dashboard

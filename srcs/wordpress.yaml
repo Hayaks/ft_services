@@ -47,12 +47,3 @@ spec:
         ports:
         - containerPort: 5050
         imagePullPolicy: Never
-        env:
-          - name: DB_NAME
-            value: wordpress
-          - name: DB_USER
-            value: admin
-          - name: DB_PASSWORD
-            value: admin
-          - name: DB_HOST
-            value: mysql-svc

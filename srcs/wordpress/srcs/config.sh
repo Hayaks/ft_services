@@ -8,6 +8,7 @@ wget https://wordpress.org/latest.tar.gz \
 && rm -rf /var/cache/apk/*
 
 mv ./root/srcs/wp-config.php ./www/
+mv ./root/srcs/nginx.conf /etc/nginx/nginx.conf
 
 openrc
 touch /run/openrc/softlevel
