@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/12 16:55:22 by jsaguez           #+#    #+#              #
-#    Updated: 2020/11/16 16:57:02 by user42           ###   ########.fr        #
+#    Updated: 2021/03/04 14:06:08 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ export MINIKUBE_IP=$(minikube ip | grep -oE "\b([0-9]{1,3}\.){3}\b")10
 
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/metallb.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/nginx.yaml
+sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/nginx/nginx.conf
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/wordpress.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/phpmyadmin.yaml
 sed -i.bak "s/IPex/"$MINIKUBE_IP"/g" srcs/grafana.yaml
@@ -98,6 +99,7 @@ echo "Server IP : $MINIKUBE_IP"
 
 rm srcs/metallb.yaml && mv srcs/metallb.yaml.bak srcs/metallb.yaml
 rm srcs/nginx.yaml && mv srcs/nginx.yaml.bak srcs/nginx.yaml
+rm srcs/nginx/nginx.conf && mv srcs/nginx/nginx.conf.bak srcs/nginx/nginx.conf
 rm srcs/wordpress.yaml && mv srcs/wordpress.yaml.bak srcs/wordpress.yaml
 rm srcs/phpmyadmin.yaml && mv srcs/phpmyadmin.yaml.bak srcs/phpmyadmin.yaml
 rm srcs/grafana.yaml && mv srcs/grafana.yaml.bak srcs/grafana.yaml
