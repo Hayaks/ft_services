@@ -1,0 +1,9 @@
+rm srcs/metallb.yaml && mv srcs/metallb.yaml.bak srcs/metallb.yaml
+rm srcs/nginx.yaml && mv srcs/nginx.yaml.bak srcs/nginx.yaml
+rm srcs/nginx/srcs/nginx.conf && mv srcs/nginx/srcs/nginx.conf.bak srcs/nginx/srcs/nginx.conf
+rm srcs/nginx/srcs/nginx.html && mv srcs/nginx/srcs/nginx.html.bak srcs/nginx/srcs/nginx.html
+rm srcs/wordpress.yaml && mv srcs/wordpress.yaml.bak srcs/wordpress.yaml
+rm srcs/phpmyadmin.yaml && mv srcs/phpmyadmin.yaml.bak srcs/phpmyadmin.yaml
+rm srcs/grafana.yaml && mv srcs/grafana.yaml.bak srcs/grafana.yaml
+rm srcs/ftps.yaml && mv srcs/ftps.yaml.bak srcs/ftps.yaml
+rm srcs/ftps/srcs/setup.sh && mv srcs/ftps/srcs/setup.sh.bak srcs/ftps/srcs/setup.sh

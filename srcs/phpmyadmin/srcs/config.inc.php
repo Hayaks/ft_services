@@ -37,5 +37,7 @@ $cfg['Servers'][$i]['user'] = 'adminWP';
 $cfg['Servers'][$i]['password'] = 'adminWP';
 
 /* Directories for saving/loading files from server */
+$cfg['PmaAbsoluteUri'] = './';
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+$cfg['TempDir'] = 'tmp';

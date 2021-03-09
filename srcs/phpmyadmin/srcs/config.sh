@@ -1,8 +1,7 @@
 mv /root/srcs/telegraf.conf /etc/telegraf.conf
-mv phpMyAdmin-5.0.2-all-languages ./www
-rm -rf ./www/config.sample.inc.php
-mv ./root/srcs/config.inc.php ./www
-mv ./root/srcs/nginx.conf /etc/nginx/nginx.conf
+mv /var/www/phpMyAdmin-5.0.2-all-languages ./var/www/phpmyadmin
+mv ./root/srcs/config.inc.php /var/www/phpmyadmin
+mv ./root/srcs/default.conf /etc/nginx/conf.d/default.conf
 
 openrc
 touch /run/openrc/softlevel
