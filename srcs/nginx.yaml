@@ -5,10 +5,8 @@ metadata:
   labels:
     app: nginx-app
   annotations:
-    metallb.universe.tf/allow-shared-ip: share-ip 
+    metallb.universe.tf/allow-shared-ip: shared
 spec:
-  type: LoadBalancer
-  loadBalancerIP: IPex
   ports:
   - port: 22
     protocol: TCP
